@@ -1,6 +1,4 @@
-# Ellipsometry Analysis Pipeline
-
-## About
+# Ellipsometry Analysis
 
 This repository contains the Python analysis code I developed for the **ellipsometry section** of my **third-year university group project**, which I also **led as project leader**.
 
