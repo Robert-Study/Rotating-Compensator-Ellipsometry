@@ -11,6 +11,26 @@ I served as **Project Leader** and developed a substantial part of the ellipsome
 
 ---
 
+## Example Result
+
+### Silicon Reference — Calibration Validation
+
+<p align="center">
+  <img
+    width="900"
+    alt="Extracted Psi and Delta values before and after calibration compared with the simulated incidence sweep"
+    src="https://github.com/user-attachments/assets/5d684c04-eeb7-4e07-8c3b-778e508ebeae"
+  />
+</p>
+
+<p align="center">
+  <em>Figure 1. Extracted Ψ and Δ values for the silicon-oxide reference sample before and after calibration, compared with the simulated incidence sweep.</em>
+</p>
+
+The calibration was tested across the full measured incidence-angle range rather than only at the 70° calibration point. The corrected Ψ–Δ values moved consistently towards the simulated reference trajectory, showing that the calibration improved the extraction across the sweep rather than simply forcing agreement at one angle.
+
+---
+
 ## Project Highlights
 
 - Developed an end-to-end analysis pipeline for rotating-compensator ellipsometry
