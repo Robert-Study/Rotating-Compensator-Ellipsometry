@@ -1,40 +1,66 @@
-Ellipsometry Analysis
-Report link: https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=svruhg
+# Rotating-Compensator Ellipsometry
 
-This repository contains the Python analysis code I developed to analyse and simulate data for rotating compensator ellipsometry.
-This was one of my contributions to our third-year university group project which I personal lead.
+Python analysis pipeline developed for a third-year experimental physics project investigating the optical properties of thin films and surface plasmon resonance.
+I led the wider eight-person nanophysics project and developed the ellipsometry analysis workflow used to process experimental rotating-compensator measurements.
 
-The workflow was built to:
-- fit harmonic coefficients
-- extract Psi and Delta
-- calibrate instrumentation
-- simulate thin-films
-- estimate film thickness and optical constants
+> **Project result:** **71% — First-Class mark.**
+> **Personal result:** **75% — First-Class mark.**
+> 
+Report link:https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=LybArG
 
-The repository is split into separate files covering the main stages of the analysis:
-- Data import and preprocessing
-- Harmonic fitting of measured intensity sweeps
-- PCSA instrument modelling
-- Fresnel--Airy thin-film simulation
-- Psi and Delta extraction
-- Instrument calibration
-- Film property fitting
-- Plotting and output generation
-- End-to-end workflow execution
 
-This project demonstrates:
+## Overview
+
+Rotating-compensator ellipsometry determines the optical properties of a sample by analysing the change in polarisation of reflected light.
+
+This project developed a complete analysis workflow for experimental measurements from gold and silver thin films, combining signal processing, instrument calibration, optical modelling and numerical optimisation.
+
+The analysis was used to extract the ellipsometric parameters **Ψ** and **Δ**, before fitting thin-film properties using Fresnel-based optical models.
+
+## Analysis Pipeline
+
+The workflow covers:
+
+1. Import and preprocessing of experimental measurements
+2. Harmonic fitting of rotating-compensator intensity data
+3. Instrument calibration
+4. Extraction of ellipsometric parameters Ψ and Δ
+5. Fresnel--Airy thin-film modelling
+6. Numerical fitting of film thickness and optical constants
+7. Uncertainty analysis and visualisation of results
+
+## Technical Methods
+
 - Scientific programming in Python
-- Numerical fitting and optimisation
-- Optical modelling
-- Thin-film analysis
+- Harmonic fitting and signal processing
+- Numerical optimisation and curve fitting
+- Instrument calibration
+- Fresnel--Airy optical modelling
+- Thin-film parameter estimation
+- Experimental uncertainty analysis
 - Data visualisation
-- Calibration and model validation
-- Structuring a multi-stage analysis workflow for experimental physics
 
+## Project Context
 
-Portfolio note:
-This repository is presented as a portfolio item for the ellipsometry analysis component of the wider project.
-Some filenames and structure have been cleaned up for presentation, but the code reflects the main analysis logic used in the work.
-Part of the advanced calibration code has been redacted.
+The analysis formed one technical component of an eight-person nanophysics group project investigating thin films and surface plasmon resonance.
 
-Feel free to get in touch at RXG384@student.bham.ac.uk (valid until 15-10-26) or home@robertgardner.co.uk
+As **Project Leader**, I coordinated experimental planning, project milestones and technical discussions across the group while also developing the ellipsometry analysis pipeline.
+
+The wider project investigated gold and silver thin films produced using magnetron sputtering and compared experimental measurements with optical simulations.
+
+## Repository Structure
+
+```text
+Rotating-Compensator-Ellipsometry/
+├── calibration_fit.py
+├── ellipsometry_common.py
+├── ellipsometry_io.py
+├── film_property_fit.py
+├── fresnel_sim.py
+├── harmonics_fit.py
+├── pcsa_model.py
+├── plotting_and_output.py
+├── psi_delta_extraction.py
+├── run_ellipsometry_pipeline.py
+├── README.md
+└── ...
