@@ -1,13 +1,13 @@
 # Rotating-Compensator Ellipsometry
 
 Python analysis pipeline developed for a third-year experimental physics project investigating the optical properties of thin films and surface plasmon resonance.
+
 I led the wider eight-person nanophysics project and developed the ellipsometry analysis workflow used to process experimental rotating-compensator measurements.
 
-> **Project result:** **71% — First-Class mark.**
-> **Personal result:** **75% — First-Class mark.**
-> 
-Report link:https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=LybArG
+> **Group project mark:** **71% — First-Class mark**  
+> **Individual mark:** **75% — First-Class mark**
 
+📄 **[View the final project report](https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=LybArG)**
 
 ## Overview
 
@@ -25,7 +25,7 @@ The workflow covers:
 2. Harmonic fitting of rotating-compensator intensity data
 3. Instrument calibration
 4. Extraction of ellipsometric parameters Ψ and Δ
-5. Fresnel--Airy thin-film modelling
+5. Fresnel–Airy thin-film modelling
 6. Numerical fitting of film thickness and optical constants
 7. Uncertainty analysis and visualisation of results
 
@@ -35,7 +35,7 @@ The workflow covers:
 - Harmonic fitting and signal processing
 - Numerical optimisation and curve fitting
 - Instrument calibration
-- Fresnel--Airy optical modelling
+- Fresnel–Airy optical modelling
 - Thin-film parameter estimation
 - Experimental uncertainty analysis
 - Data visualisation
@@ -44,7 +44,7 @@ The workflow covers:
 
 The analysis formed one technical component of an eight-person nanophysics group project investigating thin films and surface plasmon resonance.
 
-As **Project Leader**, I coordinated experimental planning, project milestones and technical discussions across the group while also developing the ellipsometry analysis pipeline.
+As **Project Leader**, I coordinated experimental planning, project milestones and technical discussions across the group while developing the ellipsometry analysis pipeline.
 
 The wider project investigated gold and silver thin films produced using magnetron sputtering and compared experimental measurements with optical simulations.
 
