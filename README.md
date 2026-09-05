@@ -83,7 +83,7 @@ This showed that both methods tracked the same relative thickness changes across
 
 ## Technical Methods
 
-`Python` · `NumPy` · `SciPy` · `Matplotlib`
+`Python` · `NumPy` · `SciPy` · `Pandas` · `Matplotlib`
 
 - Harmonic fitting and signal processing
 - Instrument calibration
@@ -93,6 +93,16 @@ This showed that both methods tracked the same relative thickness changes across
 - Thin-film thickness and optical-constant estimation
 - Uncertainty propagation and model validation
 - Experimental data visualisation
+
+### Setup
+
+Install the Python dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+The analysis modules are designed around experimental rotating-compensator sweeps and can be combined through `run_ellipsometry_pipeline.py` for an end-to-end workflow.
 
 ---
 
@@ -110,6 +120,7 @@ Rotating-Compensator-Ellipsometry/
 ├── plotting_and_output.py        # Results and visualisation
 ├── psi_delta_extraction.py       # Ψ and Δ extraction
 ├── run_ellipsometry_pipeline.py  # End-to-end analysis entry point
+├── requirements.txt              # Python dependencies
 └── README.md
 ```
 
