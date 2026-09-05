@@ -1,77 +1,24 @@
-# Rotating-Compensator Ellipsometry
-
-Python analysis pipeline developed as part of an eight-person experimental nanophysics project investigating **thin-film optical properties and surface plasmon resonance**.
-
-I served as **Project Leader** and developed a substantial part of the ellipsometry modelling and analysis workflow, including harmonic fitting, Ψ–Δ extraction, instrument calibration, Fresnel–Airy modelling and thin-film parameter estimation.
-
-> **Group project mark: 71% — First-Class mark**  
-> **Individual mark: 75% — First-Class mark**
-
-📄 **[View the final project report](https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=aEIhof)**
-
----
-
-##
-
-below is one of the clearest visual results from the project:
-
-<p align="center">
-  <img
-    width="850"
-    alt="Ellipsometry calibration result showing measured and simulated Psi-Delta behaviour"
-    src="https://github.com/user-attachments/assets/5d684c04-eeb7-4e07-8c3b-778e508ebeae"
-  />
-</p>
-
-<p align="center">
-  <em>Figure 1. Extracted Ψ and Δ values for the silicon-oxide reference sample before and after calibration, compared with the simulated incidence sweep.</em>
-</p>
-
-The aim of the analysis was to turn raw rotating-compensator intensity measurements into physically meaningful thin-film properties. This plot gives a snapshot of that process: experimental measurements are corrected and compared with the predicted optical response before being used to recover quantities such as film thickness and refractive index.
-
----
-
-## Project Highlights
-
-- Developed an end-to-end analysis pipeline for rotating-compensator ellipsometry
-- Extracted ellipsometric parameters **Ψ** and **Δ** from experimental intensity waveforms
-- Built and validated a silicon-reference calibration across a measured incidence-angle sweep
-- Recovered a silicon-oxide thickness of **55 ± 7 nm**, consistent with the certified **53.30 nm** reference value
-- Cross-validated extracted parameters against a **high-resolution industrial ellipsometer**
-- Measured gold-film thicknesses that tracked profilometry with **R² = 0.985** across the sample set
-- Extracted gold optical constants of **n = 0.195 ± 0.009** and **k = 3.51 ± 0.03** at 632.8 nm, close to published values
-- Led project planning, milestones and technical coordination across the wider eight-person group
-
----
-
-## My Contribution
-
-The wider project combined thin-film fabrication, profilometry, ellipsometry and plasmon imaging. My work focused primarily on the **ellipsometry modelling, calibration and gold-film analysis**, while I also led the overall project.
-
-My technical contributions included:
-
-- Joint development of the Fresnel-coefficient, Jones-matrix and harmonic intensity models
-- Development of the **Ψ and Δ extraction** methodology
-- Construction of the full analysis and simulation workflow
-- Silicon-reference calibration and validation across incidence angle
-- Comparison with independent industrial-ellipsometer measurements
-- Experimental waveform reconstruction and model comparison
+rm reconstruction and model comparison
 - Determination of the pseudo-Brewster angle for the gold samples
-- Analysis of gold-film thicknesses and complex refractive indices
+- Analysis of gold-film thicknesses
+- Extraction of complex refractive indices
+- Uncertainty propagation and physical validation of fitted results
+
+As Project Leader, I also coordinated experimental priorities, milestones and technical discussions across the wider fabrication, profilometry, ellipsometry and plasmon-imaging work.
 
 ---
 
 ## Analysis Pipeline
 
-The repository implements the main stages of the experimental analysis:
+The repository implements the main stages required to convert raw rotating-compensator measurements into physical film properties:
 
-1. **Import and preprocessing** of rotating-compensator measurements
-2. **Harmonic fitting** of measured intensity waveforms
-3. **Instrument calibration** using a silicon-oxide reference sample
+1. **Import and preprocessing** of experimental intensity sweeps
+2. **Harmonic fitting** of the periodic rotating-compensator waveform
+3. **Instrument calibration** using a certified silicon-oxide reference
 4. **Ψ–Δ extraction** from calibrated harmonic coefficients
 5. **Fresnel–Airy thin-film modelling**
-6. **Numerical fitting** of film thickness and optical constants
-7. **Validation and uncertainty analysis** against reference and independent measurements
+6. **Numerical fitting** of film thickness and complex refractive index
+7. **Validation and uncertainty analysis** against reference samples and independent measurements
 
 ---
 
