@@ -11,9 +11,9 @@ I served as **Project Leader** and developed a substantial part of the ellipsome
 
 ---
 
-## A Quick Look at the Experiment
+##
 
-Before getting into the modelling, here is one of the clearest visual results from the project:
+below is one of the clearest visual results from the project:
 
 <p align="center">
   <img
