@@ -11,14 +11,14 @@ I served as **Project Leader** and developed a substantial part of the ellipsome
 
 ---
 
-## Example Result
+## A Quick Look at the Experiment
 
-### Silicon Reference — Calibration Validation
+Before getting into the modelling, here is one of the clearest visual results from the project:
 
 <p align="center">
   <img
-    width="900"
-    alt="Extracted Psi and Delta values before and after calibration compared with the simulated incidence sweep"
+    width="850"
+    alt="Ellipsometry calibration result showing measured and simulated Psi-Delta behaviour"
     src="https://github.com/user-attachments/assets/5d684c04-eeb7-4e07-8c3b-778e508ebeae"
   />
 </p>
@@ -27,7 +27,7 @@ I served as **Project Leader** and developed a substantial part of the ellipsome
   <em>Figure 1. Extracted Ψ and Δ values for the silicon-oxide reference sample before and after calibration, compared with the simulated incidence sweep.</em>
 </p>
 
-The calibration was tested across the full measured incidence-angle range rather than only at the 70° calibration point. The corrected Ψ–Δ values moved consistently towards the simulated reference trajectory, showing that the calibration improved the extraction across the sweep rather than simply forcing agreement at one angle.
+The aim of the analysis was to turn raw rotating-compensator intensity measurements into physically meaningful thin-film properties. This plot gives a snapshot of that process: experimental measurements are corrected and compared with the predicted optical response before being used to recover quantities such as film thickness and refractive index.
 
 ---
 
