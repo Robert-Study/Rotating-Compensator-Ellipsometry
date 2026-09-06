@@ -19,6 +19,17 @@ from psi_delta_extraction import fit_psi_delta_for_sweep
 
 
 def run_example_pipeline(reference_sweeps, unknown_sweeps, reference_stack_builder, unknown_fit_guesses, ambient_n, substrate_n, output_dir='ellipsometry_pipeline_output'):
+    """Analyse multiple angles of one unknown film, using a known reference.
+
+    Input intensities must already have measured detector dark offsets removed.
+    This portfolio implementation is distinct from the historical report code.
+    """
+    reference_sweeps, unknown_sweeps = list(reference_sweeps), list(unknown_sweeps)
+    if not unknown_sweeps or len({s.sample_name for s in unknown_sweeps}) != 1:
+        raise ValueError('Supply sweeps for exactly one unknown sample per pipeline run.')
+    if len({s.incidence_angle_deg for s in unknown_sweeps}) < 2:
+        raise ValueError('Supply two or more incidence angles for the unknown sample.')
+    unknown_sweeps.sort(key=lambda s: s.incidence_angle_deg)
     out_dir = ensure_output_dir(output_dir)
 
     instrument, cal_table = calibrate_instrument_from_reference(
@@ -26,7 +37,7 @@ def run_example_pipeline(reference_sweeps, unknown_sweeps, reference_stack_build
         reference_stack_builder=reference_stack_builder,
         initial_instrument=InstrumentParameters(),
         fit_retardance=False,
-        fit_wobble=True,
+        fit_wobble=False,
     )
     cal_table.to_csv(out_dir / 'reference_calibration_summary.csv', index=False)
     save_json(asdict(instrument), out_dir / 'instrument_parameters.json')
@@ -36,7 +47,9 @@ def run_example_pipeline(reference_sweeps, unknown_sweeps, reference_stack_build
     delta_guess = float(unknown_fit_guesses.get('delta_deg', 90.0))
 
     for sweep in unknown_sweeps:
-        fit = fit_psi_delta_for_sweep(sweep, instrument, psi_guess_deg=psi_guess, delta_guess_deg=delta_guess, allow_scale_and_offset=True)
+        fit = fit_psi_delta_for_sweep(sweep, instrument, psi_guess_deg=psi_guess, delta_guess_deg=delta_guess)
+        if not fit.success:
+            raise RuntimeError(f'Unidentifiable Psi-Delta fit for {sweep.source_file}')
         fit_list.append(fit)
         psi_guess, delta_guess = fit.psi_deg, fit.delta_deg  # last fit is usually a decent next guess
 
@@ -66,6 +79,8 @@ def run_example_pipeline(reference_sweeps, unknown_sweeps, reference_stack_build
         n_guess=float(unknown_fit_guesses['n_real']),
         k_guess=float(unknown_fit_guesses['k_imag']),
     )
+    if not film_fit.success:
+        raise RuntimeError(film_fit.message)
     pd.DataFrame([asdict(film_fit)]).to_csv(out_dir / 'unknown_sample_film_fit.csv', index=False)
 
     harmonic_df = summarise_harmonics(unknown_sweeps)

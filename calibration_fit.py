@@ -9,7 +9,15 @@ from fresnel_sim import rho_from_stack
 from pcsa_model import instrument_intensity_from_rho
 
 
-def calibrate_instrument_from_reference(reference_sweeps, reference_stack_builder, initial_instrument=None, fit_retardance=False, fit_wobble=True):
+def calibrate_instrument_from_reference(reference_sweeps, reference_stack_builder, initial_instrument=None, fit_retardance=False, fit_wobble=False):
+    """Calibrate against known reference stacks using dark-corrected sweeps.
+
+    Each sweep has a fitted nonnegative gain and a fixed zero detector offset.
+    Leave wobble fixed unless the data justify additional instrument parameters.
+    """
+    reference_sweeps = list(reference_sweeps)
+    if len({s.incidence_angle_deg for s in reference_sweeps}) < 2:
+        raise ValueError('Instrument calibration requires references at two or more distinct incidence angles.')
     if initial_instrument is None:
         initial_instrument = InstrumentParameters()
 
@@ -65,22 +73,24 @@ def calibrate_instrument_from_reference(reference_sweeps, reference_stack_builde
             stack = reference_stack_builder(float(sweep.incidence_angle_deg))
             rho = rho_from_stack(stack, sweep.incidence_angle_deg)
             y_model = instrument_intensity_from_rho(sweep.compensator_angle_deg, rho, inst, y_scale=1.0, y_offset=0.0)
-            design = np.column_stack([y_model, np.ones_like(y_model)])
-            scale, offset = np.linalg.lstsq(design, sweep.intensity_norm, rcond=None)[0]  # lets each sweep float a bit
+            scale = max(0.0, float(np.dot(y_model, sweep.intensity_norm) / np.dot(y_model, y_model)))
+            offset = 0.0
             pieces.append(scale * y_model + offset - sweep.intensity_norm)
         return np.concatenate(pieces)
 
     result = least_squares(residuals, guess, bounds=(low, high), method='trf')
+    if not result.success or np.linalg.matrix_rank(result.jac) < len(result.x):
+        raise RuntimeError('Instrument calibration failed or is rank deficient: ' + result.message)
     best_inst = unpack(result.x)
-    errs = fit_stds(result, len(residuals(result.x)), len(result.x))
+    errs = fit_stds(result, len(residuals(result.x)), len(result.x), nuisance_parameters=len(reference_sweeps))
 
     rows = []
     for sweep in reference_sweeps:
         stack = reference_stack_builder(float(sweep.incidence_angle_deg))
         rho = rho_from_stack(stack, sweep.incidence_angle_deg)
         y_model = instrument_intensity_from_rho(sweep.compensator_angle_deg, rho, best_inst, y_scale=1.0, y_offset=0.0)
-        design = np.column_stack([y_model, np.ones_like(y_model)])
-        scale, offset = np.linalg.lstsq(design, sweep.intensity_norm, rcond=None)[0]
+        scale = max(0.0, float(np.dot(y_model, sweep.intensity_norm) / np.dot(y_model, y_model)))
+        offset = 0.0
         y_fit = scale * y_model + offset
         rows.append({
             'sample_name': sweep.sample_name,

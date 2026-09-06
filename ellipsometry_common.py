@@ -59,13 +59,13 @@ def bic_from_rss(rss_val: float, n_pts: int, n_pars: int) -> float:
     return float(n_pts * np.log(rss_val / n_pts) + n_pars * np.log(n_pts))
 
 
-def fit_stds(result, n_pts: int, n_pars: int) -> np.ndarray:
+def fit_stds(result, n_pts: int, n_pars: int, nuisance_parameters: int = 0) -> np.ndarray:
     jac = getattr(result, 'jac', None)
     if jac is None:
         return np.full(n_pars, np.nan)
 
     jac = np.asarray(jac, float)
-    if jac.ndim != 2 or n_pts <= n_pars:
+    if jac.ndim != 2 or n_pts <= n_pars + nuisance_parameters:
         return np.full(n_pars, np.nan)
 
     try:
@@ -74,10 +74,10 @@ def fit_stds(result, n_pts: int, n_pars: int) -> np.ndarray:
             return np.full(n_pars, np.nan)
         tol = np.finfo(float).eps * max(jac.shape) * s[0]
         keep = s > tol
-        if not np.any(keep):
+        if np.count_nonzero(keep) < n_pars:
             return np.full(n_pars, np.nan)
         jtj_inv = (vt[keep].T / (s[keep] ** 2)) @ vt[keep]
-        dof = max(n_pts - n_pars, 1)
+        dof = n_pts - n_pars - nuisance_parameters
         sigma2 = 2.0 * float(result.cost) / dof
         cov = jtj_inv * sigma2
         return np.sqrt(np.clip(np.diag(cov), 0.0, None))
@@ -147,6 +147,9 @@ class FilmFitResult:
     thickness_std_nm: float = float('nan')
     n_real_std: float = float('nan')
     k_imag_std: float = float('nan')
+    jacobian_condition: float = float('nan')
+    at_bound: bool = False
+    message: str = ''
 
 
 @dataclass
@@ -156,7 +159,7 @@ class ProjectConfig:
     file_glob: str = '*.txt'
     theta_min_deg: float | None = None
     theta_max_deg: float | None = None
-    drop_zero_voltage: bool = True
+    drop_zero_voltage: bool = False
     zero_tol: float = 0.0
     peak_window_deg: tuple[float, float] | None = None
 

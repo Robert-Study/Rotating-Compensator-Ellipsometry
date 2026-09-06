@@ -7,7 +7,7 @@ import numpy as np
 from ellipsometry_common import NUM_RE, ProjectConfig, SweepData
 
 
-def load_two_column_sweep(path, theta_min_deg=None, theta_max_deg=None, drop_zero=True, zero_tol=0.0):
+def load_two_column_sweep(path, theta_min_deg=None, theta_max_deg=None, drop_zero=False, zero_tol=0.0):
     path = Path(path)
     angles, volts = [], []
 
@@ -16,10 +16,13 @@ def load_two_column_sweep(path, theta_min_deg=None, theta_max_deg=None, drop_zer
             text = line.strip()
             if not text or text.startswith('#'):
                 continue
-            nums = NUM_RE.findall(text)
-            if len(nums) < 2:
+            fields = text.replace(',', ' ').split()
+            if len(fields) != 2:
                 continue
-            ang, sig = map(float, nums[:2])
+            try:
+                ang, sig = map(float, fields)
+            except ValueError:
+                continue
             if np.isfinite(ang) and np.isfinite(sig):
                 angles.append(ang)
                 volts.append(sig)
@@ -40,6 +43,8 @@ def load_two_column_sweep(path, theta_min_deg=None, theta_max_deg=None, drop_zer
         keep = np.abs(volts) > float(zero_tol)  # handy for dead points at the start/end
         angles, volts = angles[keep], volts[keep]
 
+    if len(angles) < 10:
+        raise ValueError(f'Too few rows remain after filtering {path}')
     order = np.argsort(angles)
     return angles[order], volts[order]
 
@@ -54,8 +59,8 @@ def peak_normalise(angle_deg, signal, lo_deg=None, hi_deg=None):
         keep = (angle_deg >= lo_deg) & (angle_deg <= hi_deg)
         peak = float(np.nanmax(signal[keep])) if np.any(keep) else float(np.nanmax(signal))
 
-    if not np.isfinite(peak) or abs(peak) < 1e-15:
-        peak = 1.0
+    if not np.isfinite(peak) or peak <= 0:
+        raise ValueError('Peak normalisation requires a finite positive signal peak.')
     return signal / peak, peak
 
 
@@ -65,7 +70,13 @@ def first_number(text: str):
 
 
 def parse_incidence_angle_from_filename(path):
-    return first_number(Path(path).stem)
+    """Require an explicit angle, e.g. gold_250s_70deg.txt, or a numeric stem."""
+    import re
+    stem = Path(path).stem
+    hit = re.search(r'(\d+(?:\.\d+)?)\s*(?:deg|°)', stem, flags=re.IGNORECASE)
+    if hit:
+        return float(hit.group(1))
+    return float(stem) if NUM_RE.fullmatch(stem) else None
 
 
 def build_sweep(path, sample_name, incidence_angle_deg, config: ProjectConfig):

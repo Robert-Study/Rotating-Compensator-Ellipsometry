@@ -68,11 +68,11 @@ def plot_sweep_with_fit(sweep, instrument, psi_deg, delta_deg, y_scale, y_offset
     y_fit = instrument_intensity_from_psidelta(angle_deg, psi_deg, delta_deg, instrument, y_scale=y_scale, y_offset=y_offset)
 
     fig, ax = plt.subplots(figsize=(8.4, 4.8))
-    ax.plot(angle_deg, y_data, label='Measured')
+    ax.plot(angle_deg, y_data, label='Synthetic input' if sweep.metadata.get('synthetic') else 'Measured')
     ax.plot(angle_deg, y_fit, label='Best fit')
     ax.set_xlabel('Compensator angle / deg')
     ax.set_ylabel('Normalised intensity / a.u.')
-    ax.set_title(f"{sweep.sample_name}, incidence {sweep.incidence_angle_deg:.1f}$^{{\circ}}$")
+    ax.set_title(rf"{sweep.sample_name}, incidence {sweep.incidence_angle_deg:.1f}$^{{\circ}}$")
     ax.legend()
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
@@ -114,3 +114,4 @@ def plot_metric_vs_incidence(incidence_angles_deg, metric_values, ylabel, title,
     if output_path is not None:
         fig.savefig(output_path, dpi=200, bbox_inches='tight')
     return fig, ax
+

@@ -1,200 +1,67 @@
-# Rotating-Compensator Ellipsometry
+# Nanophysics Group Project
 
-Python analysis pipeline developed as part of an eight-person experimental nanophysics project investigating **thin-film optical properties and surface plasmon resonance**.
+**Rotating-compensator ellipsometry, thin films and surface plasmon resonance**
 
-I served as **Project Leader** and developed a substantial part of the ellipsometry modelling and analysis workflow, including harmonic fitting, Ψ–Δ extraction, instrument calibration, Fresnel–Airy modelling and thin-film parameter estimation.
+I led the experimental group project and worked mainly on the ellipsometry modelling, instrument calibration and gold-film analysis. This repository contains the Python analysis workflow. The wider project also covered thin-film fabrication, profilometry and surface-plasmon measurements.
 
-> **Group project mark: 71% — First-Class mark**  
-> **Individual mark: 75% — First-Class mark**
+**Group mark: 71% · Individual mark: 75%** — both First-Class marks.
 
-📄 **[View the final project report](https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=aEIhof)**
+[Read the Nanophysics Group Project report](https://1drv.ms/b/c/4a8cd531de3d2eb8/IQDELQqEGltQTbL7tnMde-ugARVe41tXLblHZuhFeltOyTY?e=aEIhof) · [Analysis notes](docs/analysis-notes.md) · [Tests](https://github.com/Robert-Study/Rotating-Compensator-Ellipsometry/actions)
 
----
+## What the calibration changed
 
-## A Glimpse of the Analysis
+Small alignment errors in a rotating-compensator instrument can shift the extracted Ψ and Δ values enough to affect the recovered film properties. I developed a calibration using the silicon-oxide reference and checked whether the correction still helped away from the 70° calibration point.
 
-One of the clearest outcomes of the project is shown below:
+![Silicon-reference Psi and Delta before and after calibration, compared with the simulated incidence sweep](assets/calibration-reference.png)
 
-<p align="center">
-  <img
-    width="850"
-    alt="Ellipsometry calibration result showing measured and simulated Psi-Delta behaviour"
-    src="https://github.com/user-attachments/assets/5d684c04-eeb7-4e07-8c3b-778e508ebeae"
-  />
-</p>
+*Figure 17 from the report, §4.5.2. The orange points show the calibrated measurements; the red points show the uncalibrated results.*
 
-<p align="center">
-  <em>Figure 1. Extracted Ψ and Δ values for the silicon-oxide reference sample before and after calibration, compared with the simulated incidence sweep.</em>
-</p>
+The correction improved agreement across the measured incidence sweep and was carried forward to the gold and silver measurements. The useful result was a calibration that worked beyond its original reference point. A residual offset in Δ remained, which is discussed in the report.
 
-The aim of the analysis was to turn raw rotating-compensator intensity measurements into physically meaningful thin-film properties.
+## Results from the experiment
 
-Compared with previous-year implementations of the experiment, the improved optical setup and analysis tracked the highly sensitive **Ψ and Δ parameters approximately 25× more closely**. I then developed a custom instrument calibration which reduced the remaining Ψ–Δ tracking error by approximately a **further factor of two**.
+| Check | Reported result | What it establishes |
+| --- | --- | --- |
+| Silicon-oxide thickness across incidence angles | **55 ± 7 nm**; certified value **53.30 nm** | Agreement within the reported uncertainty |
+| Independent industrial ellipsometer at 70° | **55.48 ± 0.07 nm** | An external thickness comparison |
+| Silicon-oxide refractive index | **1.464 ± 0.004**; certificate **1.455** | A small remaining discrepancy |
+| Gold thickness against profilometry | **R² = 0.985**, slope **1.46 ± 0.08** through the origin | Strong tracking, with different absolute thickness scales |
+| Gold optical constants at 632.8 nm | **n = 0.195 ± 0.009**, **k = 3.51 ± 0.03** | Estimates conditional on the thin-film model |
 
-The result was a sufficiently accurate and stable measurement pipeline to recover **film thickness and complex optical properties**, something previous iterations of the project had not successfully achieved.
+The high correlation with profilometry does not establish absolute accuracy: the slope differs substantially from one. The measured film profiles provide evidence for step-height underestimation, but roughness, interfaces and model assumptions also need consideration. At 75°, the calibrated silicon thickness was **68 ± 6 nm**, showing that performance was not uniform across all angles.
 
-Crucially, the calibration was not limited to one measurement or one sample. It was derived using a silicon-oxide reference, validated across a full incidence-angle sweep, and then carried forward to the **gold and silver thin-film measurements**. This made it an instrument-level correction rather than a one-off fit to a particular dataset.
+## My contribution
 
----
+The report identifies authors by initials. My individual sections cover Ψ–Δ extraction, the analysis workflow, silicon calibration and validation, the industrial-ellipsometer comparison, and the gold-film results (§§4.4.2, 4.4.4, 4.5 and 4.6.1). I also contributed jointly to the Fresnel, Jones-matrix and intensity modelling.
 
-## Project Highlights
+As project leader, I coordinated experimental priorities, milestones and discussion between the fabrication, profilometry, ellipsometry and plasmon groups. The report credits the other contributors for their work.
 
-- Led an **eight-person experimental nanophysics project**
-- Developed an end-to-end rotating-compensator ellipsometry analysis pipeline
-- Improved Ψ–Δ tracking by approximately **25× compared with previous-year implementations**
-- Developed a custom calibration that reduced the remaining tracking error by approximately **2×**
-- Built a calibration that generalised across **different incidence angles and thin-film samples**
-- Extracted ellipsometric parameters **Ψ** and **Δ** from experimental intensity waveforms
-- Recovered a silicon-oxide thickness of **55 ± 7 nm**, consistent with the certified **53.30 nm**
-- Cross-validated extracted parameters against a **high-resolution industrial ellipsometer**
-- Measured gold-film thicknesses that tracked profilometry with **R² = 0.985**
-- Extracted gold optical constants of **n = 0.195 ± 0.009** and **k = 3.51 ± 0.03** at 632.8 nm
-- Enabled successful estimation of thin-film **thickness, refractive index and extinction coefficient**
+## Run an example
 
----
-
-## Why the Calibration Mattered
-
-Ellipsometry is extremely sensitive to small experimental imperfections.
-
-Slight errors in:
-
-- polariser alignment
-- compensator orientation
-- retardance
-- incidence angle
-- optical extinction
-- rotational wobble
-- detector response
-- normalisation
-
-can produce measurable shifts in Ψ and Δ.
-
-Rather than treating these effects independently, I developed an empirical instrument calibration using a certified silicon-oxide reference sample.
-
-The measured harmonic coefficients were mapped onto the expected optical response of the reference, producing a correction that characterised the **measurement system itself**.
-
-This distinction was important.
-
-The calibration was first determined at the reference measurement, but when applied across the full incidence-angle sweep it continued to move the extracted Ψ–Δ values towards the simulated trajectory rather than only improving the original calibration point.
-
-It could then be applied unchanged to the gold and silver measurements.
-
-This provided strong evidence that the calibration was correcting **systematic instrument behaviour**, rather than simply overfitting one sample.
-
----
-
-## My Contribution
-
-The wider project combined thin-film fabrication, profilometry, ellipsometry and surface-plasmon imaging.
-
-My work focused primarily on the **ellipsometry modelling, calibration and gold-film analysis**, while I also coordinated the overall eight-person project.
-
-My technical contributions included:
-
-- Joint development of the Fresnel-coefficient, Jones-matrix and harmonic intensity models
-- Development of the **Ψ and Δ extraction methodology**
-- Construction of the full analysis and simulation workflow
-- Design of the silicon-reference calibration
-- Validation of calibration across incidence angle
-- Comparison with independent industrial-ellipsometer measurements
-- Experimental waveform reconstruction and model comparison
-- Determination of the pseudo-Brewster angle for the gold samples
-- Analysis of gold-film thicknesses
-- Extraction of complex refractive indices
-- Uncertainty propagation and physical validation of fitted results
-
-As Project Leader, I also coordinated experimental priorities, milestones and technical discussions across the wider fabrication, profilometry, ellipsometry and plasmon-imaging work.
-
----
-
-## Analysis Pipeline
-
-The repository implements the main stages required to convert raw rotating-compensator measurements into physical film properties:
-
-1. **Import and preprocessing** of experimental intensity sweeps
-2. **Harmonic fitting** of the periodic rotating-compensator waveform
-3. **Instrument calibration** using a certified silicon-oxide reference
-4. **Ψ–Δ extraction** from calibrated harmonic coefficients
-5. **Fresnel–Airy thin-film modelling**
-6. **Numerical fitting** of film thickness and complex refractive index
-7. **Validation and uncertainty analysis** against reference samples and independent measurements
-
----
-
-## Validation Results
-
-### Silicon reference
-
-Calibration was tested across the full measured incidence-angle sweep rather than only at the 70° calibration point. The corrected Ψ–Δ values moved consistently towards the simulated reference trajectory, while the extracted film properties remained approximately constant across angle.
-
-A constant fit gave:
-
-- **Thickness:** `55 ± 7 nm` vs certified `53.30 nm`
-- **Refractive index:** `1.464 ± 0.004` vs certificate value `1.455`
-
-An independent industrial ellipsometer measured a thickness of **55.48 ± 0.07 nm** at 70°, providing an external cross-check on the calibration.
-
-### Gold thin films
-
-Six gold-coated prisms were analysed at their experimentally determined pseudo-Brewster angle of **71.2 ± 0.2°**.
-
-The most meaningful validation was the direct comparison between ellipsometric and profilometric thickness measurements. The two methods showed a strong correlation:
-
-- **R² = 0.985**
-- Best-fit slope through the origin: **1.46 ± 0.08**
-
-This showed that both methods tracked the same relative thickness changes across the sample set, while also revealing a systematic scale difference consistent with known step-height underestimation in profilometry.
-
----
-
-## Technical Methods
-
-`Python` · `NumPy` · `SciPy` · `Pandas` · `Matplotlib`
-
-- Harmonic fitting and signal processing
-- Instrument calibration
-- Fresnel coefficients and Jones matrices
-- Fresnel–Airy thin-film modelling
-- Numerical optimisation and curve fitting
-- Thin-film thickness and optical-constant estimation
-- Uncertainty propagation and model validation
-- Experimental data visualisation
-
-### Setup
-
-Install the Python dependencies with:
+Use Python 3.12. From a fresh checkout:
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/Robert-Study/Rotating-Compensator-Ellipsometry.git
+cd Rotating-Compensator-Ellipsometry
+python -m venv .venv
 ```
 
-The analysis modules are designed around experimental rotating-compensator sweeps and can be combined through `run_ellipsometry_pipeline.py` for an end-to-end workflow.
+Activate the environment with `source .venv/bin/activate` on macOS/Linux, or `.venv\Scripts\Activate.ps1` in Windows PowerShell. Then:
 
----
-
-## Repository Structure
-
-```text
-Rotating-Compensator-Ellipsometry/
-├── calibration_fit.py            # Instrument calibration
-├── ellipsometry_common.py        # Shared utilities and parameters
-├── ellipsometry_io.py            # Experimental data import
-├── film_property_fit.py          # Thin-film parameter fitting
-├── fresnel_sim.py                # Fresnel-based simulation
-├── harmonics_fit.py              # Harmonic waveform fitting
-├── pcsa_model.py                 # Rotating-compensator intensity model
-├── plotting_and_output.py        # Results and visualisation
-├── psi_delta_extraction.py       # Ψ and Δ extraction
-├── run_ellipsometry_pipeline.py  # End-to-end analysis entry point
-├── requirements.txt              # Python dependencies
-└── README.md
+```bash
+python -m pip install -r requirements.txt
+python demo.py
+python -m unittest discover -s tests -v
 ```
 
----
+The example writes synthetic input sweeps, waveform plots, calibration tables and `synthetic-recovery.json` to `outputs/synthetic-demo/`. Its known film has **d = 83 nm, n = 1.7, k = 0.1**. The saved [example result](assets/synthetic-recovery.json) shows the recovered parameters for seed 2026 with added noise.
 
-## Wider Project Context
+The example checks that the software runs and recovers a known model. It does not reproduce the laboratory measurements: the raw experimental sweeps are not included.
 
-The full nanophysics project investigated sputtered **gold and silver thin films** using magnetron sputtering, profilometry, rotating-compensator ellipsometry and surface-plasmon measurements in the Kretschmann configuration.
+## Using measured data
 
-The combined project successfully produced and characterised thin films, extracted film thicknesses and optical constants, and observed surface plasmon resonance for both gold and silver samples.
+The input files contain two numeric columns: compensator angle in degrees and intensity. Subtract a measured detector dark signal before normalising. Filenames can use an explicit angle such as `gold_250s_70deg.txt`; sputtering time is not interpreted as incidence angle.
+
+`run_example_pipeline` accepts reference sweeps and measurements of **one unknown film at multiple incidence angles**. The current model fits three film parameters, so a single Ψ–Δ pair is insufficient. See [the analysis notes](docs/analysis-notes.md) for conventions, assumptions and the module map.
+
+The report records the original assessed work. The modular code, synthetic example and tests have been revised since assessment.

@@ -1,0 +1,25 @@
+{
+  "synthetic": true,
+  "seed": 2026,
+  "noise_std": 0.0002,
+  "known_input": {
+    "thickness_nm": 83.0,
+    "n_real": 1.7,
+    "k_imag": 0.1
+  },
+  "recovered": {
+    "sample_name": "synthetic_film",
+    "thickness_nm": 82.44712243065452,
+    "n_real": 1.699956407698767,
+    "k_imag": 0.10150039022492371,
+    "rmse_psi_deg": 0.0028356127935892437,
+    "rmse_delta_deg": 0.0049153536077796425,
+    "success": true,
+    "thickness_std_nm": 0.2565188435913076,
+    "n_real_std": 1.8650563803206212e-05,
+    "k_imag_std": 0.0007003500968391366,
+    "jacobian_condition": 40986.823288281084,
+    "at_bound": false,
+    "message": "`xtol` termination condition is satisfied."
+  }
+}
