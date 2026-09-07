@@ -4,10 +4,10 @@ from dataclasses import asdict
 
 import pandas as pd
 
-from calibration_fit import calibrate_instrument_from_reference
-from ellipsometry_common import InstrumentParameters, save_json
-from film_property_fit import fit_film_properties_from_psidelta
-from plotting_and_output import (
+from analysis.calibration_fit import calibrate_instrument_from_reference
+from analysis.ellipsometry_common import InstrumentParameters, save_json
+from analysis.film_property_fit import fit_film_properties_from_psidelta
+from processing.plotting_and_output import (
     ensure_output_dir,
     plot_metric_vs_incidence,
     plot_psi_delta_vs_incidence,
@@ -15,7 +15,7 @@ from plotting_and_output import (
     psi_delta_table,
     summarise_harmonics,
 )
-from psi_delta_extraction import fit_psi_delta_for_sweep
+from analysis.psi_delta_extraction import fit_psi_delta_for_sweep
 
 
 def run_example_pipeline(reference_sweeps, unknown_sweeps, reference_stack_builder, unknown_fit_guesses, ambient_n, substrate_n, output_dir='ellipsometry_pipeline_output'):

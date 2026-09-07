@@ -3,8 +3,8 @@ from __future__ import annotations
 import numpy as np
 from scipy.optimize import least_squares
 
-from ellipsometry_common import FilmFitResult, fit_stds, wrap_pm180
-from fresnel_sim import FilmStack, psi_delta_from_stack
+from analysis.ellipsometry_common import FilmFitResult, fit_stds, wrap_pm180
+from analysis.fresnel_sim import FilmStack, psi_delta_from_stack
 
 
 def fit_film_properties_from_psidelta(sample_name, incidence_angles_deg, psi_measured_deg, delta_measured_deg, wavelength_nm, ambient_n, substrate_n, thickness_guess_nm, n_guess, k_guess, thickness_bounds_nm=(0.1, 1000.0), n_bounds=(0.1, 10.0), k_bounds=(0.0, 10.0)):

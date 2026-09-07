@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ellipsometry_common import FilmStack, deg2rad, rad2deg, tidy_psi_delta
+from analysis.ellipsometry_common import FilmStack, deg2rad, rad2deg, tidy_psi_delta
 
 
 def snell(n1: complex, n2: complex, theta1_rad: float):

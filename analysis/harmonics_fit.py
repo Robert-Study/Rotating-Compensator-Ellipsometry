@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 from scipy.optimize import curve_fit
 
-from ellipsometry_common import bic_from_rss, r2_score, rmse, rss
+from analysis.ellipsometry_common import bic_from_rss, r2_score, rmse, rss
 
 
 def fit_fourier_harmonics(theta_deg: np.ndarray, intensity: np.ndarray) -> dict[str, float]:

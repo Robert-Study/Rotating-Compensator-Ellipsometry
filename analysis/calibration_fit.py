@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import least_squares
 
-from ellipsometry_common import InstrumentParameters, fit_stds
-from fresnel_sim import rho_from_stack
-from pcsa_model import instrument_intensity_from_rho
+from analysis.ellipsometry_common import InstrumentParameters, fit_stds
+from analysis.fresnel_sim import rho_from_stack
+from analysis.pcsa_model import instrument_intensity_from_rho
 
 
 def calibrate_instrument_from_reference(reference_sweeps, reference_stack_builder, initial_instrument=None, fit_retardance=False, fit_wobble=False):

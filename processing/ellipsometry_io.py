@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from ellipsometry_common import NUM_RE, ProjectConfig, SweepData
+from analysis.ellipsometry_common import NUM_RE, ProjectConfig, SweepData
 
 
 def load_two_column_sweep(path, theta_min_deg=None, theta_max_deg=None, drop_zero=False, zero_tol=0.0):

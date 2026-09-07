@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ellipsometry_common import InstrumentParameters, deg2rad
+from analysis.ellipsometry_common import InstrumentParameters, deg2rad
 
 
 def rot(angle_rad: float):

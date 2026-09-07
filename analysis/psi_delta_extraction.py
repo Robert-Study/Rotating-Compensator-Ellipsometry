@@ -3,8 +3,8 @@ from __future__ import annotations
 import numpy as np
 from scipy.optimize import least_squares
 
-from ellipsometry_common import InstrumentParameters, PsiDeltaFit, fit_stds, r2_score, rmse, tidy_psi_delta
-from pcsa_model import instrument_intensity_from_psidelta
+from analysis.ellipsometry_common import InstrumentParameters, PsiDeltaFit, fit_stds, r2_score, rmse, tidy_psi_delta
+from analysis.pcsa_model import instrument_intensity_from_psidelta
 
 
 def fit_psi_delta_for_sweep(sweep, instrument: InstrumentParameters, psi_guess_deg=45.0, delta_guess_deg=90.0, allow_scale_and_offset=False):

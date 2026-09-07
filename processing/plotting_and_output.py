@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from harmonics_fit import fit_fourier_harmonics
-from pcsa_model import instrument_intensity_from_psidelta
+from analysis.harmonics_fit import fit_fourier_harmonics
+from analysis.pcsa_model import instrument_intensity_from_psidelta
 
 
 def ensure_output_dir(path):
